@@ -45,4 +45,6 @@ router.get('/appliances', getAppliancesReq)
 // router.post('check', executeCheck)
 router.get('/check', executeCheck)
 
-module.exports = router
+module.exports = {
+  router
+}

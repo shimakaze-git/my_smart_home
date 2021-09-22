@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "node dev.js",
-    "build": "node index.js",
+    "dev": "netlify-lambda serve ./api",
+    "build": "netlify-lambda build ./api",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint": "yarn lint:js",
     "test": "jest"
@@ -16,7 +16,9 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "google-spreadsheet": "^3.1.15",
-    "js-cookie": "^3.0.0"
+    "js-cookie": "^3.0.0",
+    "netlify-lambda": "^2.0.14",
+    "serverless-http": "^2.7.0"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.1.0",
