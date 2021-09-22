@@ -1,21 +1,21 @@
 const express = require('express')
 
-require('encoding')
+// require('encoding')
 // const {
 //   oauthSocialLineState,
 //   oauthSocialLineCallback,
 //   oauthSocialLineSignup,
 // } = require('./logic/oauth')
 
-const {
-  getDevicesReq
-} = require('./logic/devices')
-const {
-  getAppliancesReq
-} = require('./logic/appliances')
-const {
-  executeCheck
-} = require('./logic/check')
+// const {
+//   getDevicesReq
+// } = require('./logic/devices')
+// const {
+//   getAppliancesReq
+// } = require('./logic/appliances')
+// const {
+//   executeCheck
+// } = require('./logic/check')
 
 // const { SignIn, SignUp, Logout } = require('./logic/auth')
 
@@ -32,8 +32,8 @@ router.get('/', (req, res) => {
   res.json({ route: req.originalUrl })
 })
 
-router.get('/devices', getDevicesReq)
-router.get('/appliances', getAppliancesReq)
+// router.get('/devices', getDevicesReq)
+// router.get('/appliances', getAppliancesReq)
 
 // router.post('/oauth/social/line/callback', oauthSocialLineCallback)
 // router.post('/oauth/social/line/signup', oauthSocialLineSignup)
@@ -45,7 +45,7 @@ router.get('/appliances', getAppliancesReq)
 
 // 定期的なチェック
 // router.post('check', executeCheck)
-router.get('/check', executeCheck)
+// router.get('/check', executeCheck)
 
 module.exports = {
   router
