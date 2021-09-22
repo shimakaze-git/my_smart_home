@@ -1,3 +1,6 @@
 [build]
   command = "yarn install && yarn build"
   functions = "dist/api"
+
+[[plugins]]
+package = "@netlify/plugin-functions-install-core"
