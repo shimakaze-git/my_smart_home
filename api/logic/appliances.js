@@ -22,31 +22,20 @@ const getAppliances = async (req, res) => {
   // il 照度
   // te 気温
   // mo 人感センサー
+
   let data = []
   for (i in appliances) {
-    console.log('appliances', appliances[i])
-
-    // // 湿度
-    // devices[i].newest_events.humidity = devices[i].newest_events.hu
-    // delete devices[i].newest_events.hu
-
-    // // 照度
-    // devices[i].newest_events.Illuminance = devices[i].newest_events.il
-    // delete devices[i].newest_events.il
-
-    // // 気温
-    // devices[i].newest_events.temperature = devices[i].newest_events.te
-    // delete devices[i].newest_events.te
-
-    // // 人感センサー
-    // devices[i].newest_events.motion = devices[i].newest_events.mo
-    // delete devices[i].newest_events.mo
-
     data.push(appliances[i])
   }
+  return data
+}
+
+const getAppliancesReq = async (req, res) => {
+  const data = await getAppliances()
   return res.status(200).json(data)
 }
 
 module.exports = {
-  getAppliances,
+  getAppliancesReq,
+  getAppliances
 }

@@ -57,7 +57,7 @@ const axios = require('axios')
 //   })
 // }
 
-const getDevices = async (req, res) => {
+const getDevices = async () => {
   const accessToken = 'pYCoDaoVuRe73kkHW-ZNnJ3t4KE1vLI5NFd57rY5jv4.If-5fT043ck_yqWqMAviKS25s4AOtE9hPx99iv6oT4s'
   const params = {
     headers: {
@@ -100,9 +100,15 @@ const getDevices = async (req, res) => {
 
     data.push(devices[i])
   }
+  return data
+}
+
+const getDevicesReq = async (req, res) => {
+  const data = await getDevices()
   return res.status(200).json(data)
 }
 
 module.exports = {
-  getDevices,
+  getDevicesReq,
+  getDevices
 }

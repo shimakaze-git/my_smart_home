@@ -6,11 +6,14 @@ const express = require('express')
 // } = require('./logic/oauth')
 
 const {
-  getDevices
+  getDevicesReq
 } = require('./logic/devices')
 const {
-  getAppliances
+  getAppliancesReq
 } = require('./logic/appliances')
+const {
+  executeCheck
+} = require('./logic/check')
 
 // const { SignIn, SignUp, Logout } = require('./logic/auth')
 
@@ -27,8 +30,8 @@ router.get('/', (req, res) => {
   res.json({ route: req.originalUrl })
 })
 
-router.get('/devices', getDevices)
-router.get('/appliances', getAppliances)
+router.get('/devices', getDevicesReq)
+router.get('/appliances', getAppliancesReq)
 
 // router.post('/oauth/social/line/callback', oauthSocialLineCallback)
 // router.post('/oauth/social/line/signup', oauthSocialLineSignup)
@@ -37,5 +40,9 @@ router.get('/appliances', getAppliances)
 // router.post('/auth/signin', SignIn)
 // router.post('/auth/signup', SignUp)
 // router.post('/auth/logout', Logout)
+
+// 定期的なチェック
+// router.post('check', executeCheck)
+router.get('/check', executeCheck)
 
 module.exports = router

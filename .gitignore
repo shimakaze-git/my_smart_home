@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# keyFile
+my_smart_home.json
