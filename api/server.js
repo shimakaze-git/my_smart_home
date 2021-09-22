@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const serverless = require('serverless-http')
 
-const { router } = require('./router')
+// const { router } = require('./router')
 const logger = require('./common/logger')
 
 const app = express()
@@ -19,9 +19,9 @@ app.use(
   '/.netlify/functions/server',
   (req, _, next) => {
     console.log('Request URL API:', req.originalUrl)
-    next()
+    // next()
   },
-  router
+  // router
 )
 
 module.exports = app
