@@ -16,7 +16,7 @@ app.use(logger)
 
 app.use(
   // '/',
-  '/.netlify/functions/server',
+  '/.netlify/functions/app',
   (req, _, next) => {
     console.log('Request URL API:', req.originalUrl)
     next()
