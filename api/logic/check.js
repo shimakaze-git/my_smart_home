@@ -68,7 +68,7 @@ const executeCheck = async (req, res) => {
 
     const spreadsheetId = process.env.spreadsheetId || '1t68tFh6j3QVzo_l6HjyzWTifbN1I0mJxY6no4cRtZkY'
     const service = await authentication(spreadsheetId)
-    // await service.insert(data)
+    await service.insert(data)
 
     return res.status(200).json(data)
   } catch (e) {
