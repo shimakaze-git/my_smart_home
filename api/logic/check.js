@@ -1,26 +1,26 @@
-const { authentication } = require('../common/auth')
+// const { authentication } = require('../common/auth')
 const { nowDate } = require('../common/date')
 
-const {
-  getDevices
-} = require('./devices')
-const {
-  getAppliances
-} = require('./appliances')
+// const {
+//   getDevices
+// } = require('./devices')
+// const {
+//   getAppliances
+// } = require('./appliances')
 
 const executeCheck = async (req, res) => {
-  const devices = await getDevices()
+  // const devices = await getDevices()
 
   const spreadsheetId = process.env.spreadsheetId || '1t68tFh6j3QVzo_l6HjyzWTifbN1I0mJxY6no4cRtZkY'
-  const service = await authentication(spreadsheetId)
+  // const service = await authentication(spreadsheetId)
 
-  const appliances = await getAppliances()
+  // const appliances = await getAppliances()
   // console.log('appliances', appliances)
   // appliances
 
-  for (i in appliances) {
-    console.log('appliances[i]', appliances[i].aircon)
-  }
+  // for (i in appliances) {
+  //   console.log('appliances[i]', appliances[i].aircon)
+  // }
 
   let data = {}
   try {
@@ -33,14 +33,14 @@ const executeCheck = async (req, res) => {
     // console.log('service', await service.getRows(0))
     // console.log('devices', devices)
 
-    for (const device of devices) {
-      const newestEvents = device.newest_events
+    // for (const device of devices) {
+    //   const newestEvents = device.newest_events
 
-      humidity = newestEvents.humidity.val
-      Illuminance = newestEvents.Illuminance.val
-      temperature = newestEvents.temperature.val
-      motion = newestEvents.motion.val
-    }
+    //   humidity = newestEvents.humidity.val
+    //   Illuminance = newestEvents.Illuminance.val
+    //   temperature = newestEvents.temperature.val
+    //   motion = newestEvents.motion.val
+    // }
 
     const nDate = nowDate()
 
@@ -62,13 +62,13 @@ const executeCheck = async (req, res) => {
     // mo 人感センサー
     data = {
       '日時': now,
-      '温度': temperature,
-      '湿度': humidity,
-      '照度': Illuminance,
-      '人感': motion,
+      // '温度': temperature,
+      // '湿度': humidity,
+      // '照度': Illuminance,
+      // '人感': motion,
       '日時(補正)': formatNow
     }
-    await service.insert(data)
+    // await service.insert(data)
 
     return res.status(200).json(data)
   } catch (e) {

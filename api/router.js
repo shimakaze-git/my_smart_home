@@ -13,9 +13,9 @@ const {
 const {
   getAppliancesReq
 } = require('./logic/appliances')
-// const {
-//   executeCheck
-// } = require('./logic/check')
+const {
+  executeCheck
+} = require('./logic/check')
 
 // const { SignIn, SignUp, Logout } = require('./logic/auth')
 
@@ -45,7 +45,7 @@ router.get('/appliances', getAppliancesReq)
 
 // 定期的なチェック
 // router.post('check', executeCheck)
-// router.get('/check', executeCheck)
+router.get('/check', executeCheck)
 
 module.exports = {
   router
