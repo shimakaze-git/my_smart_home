@@ -1,6 +1,6 @@
 const fs = require('fs')
 // const { google } = require('googleapis')
-const { GoogleSpreadsheet } = require('google-spreadsheet')
+// const { GoogleSpreadsheet } = require('google-spreadsheet')
 
 const keyFile = process.env.keyFile || 'my_smart_home.json'
 
@@ -12,7 +12,7 @@ class SpreadSheetService {
    */
 
   constructor(spreadsheetKey) {
-    this.doc = new GoogleSpreadsheet(spreadsheetKey)
+    // this.doc = new GoogleSpreadsheet(spreadsheetKey)
   }
 
   /**
