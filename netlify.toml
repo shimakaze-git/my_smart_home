@@ -1,4 +1,5 @@
 [build]
+  publish = "my_smart_home_web/dist"
   command = "yarn install && yarn build"
   functions = "dist/api"
 
