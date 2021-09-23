@@ -11,9 +11,6 @@ const {
 const executeCheck = async (req, res) => {
   const devices = await getDevices()
 
-  const spreadsheetId = process.env.spreadsheetId || '1t68tFh6j3QVzo_l6HjyzWTifbN1I0mJxY6no4cRtZkY'
-  const service = await authentication(spreadsheetId)
-
   // const appliances = await getAppliances()
   // console.log('appliances', appliances)
   // appliances
@@ -68,6 +65,9 @@ const executeCheck = async (req, res) => {
       '人感': motion,
       '日時(補正)': formatNow
     }
+
+    const spreadsheetId = process.env.spreadsheetId || '1t68tFh6j3QVzo_l6HjyzWTifbN1I0mJxY6no4cRtZkY'
+    const service = await authentication(spreadsheetId)
     // await service.insert(data)
 
     return res.status(200).json(data)
