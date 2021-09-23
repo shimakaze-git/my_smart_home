@@ -30,7 +30,7 @@ const executeCheck = async (req, res) => {
     let motion = 0.0
 
     // newest_events
-    console.log('service', await service.getRows(0))
+    // console.log('service', await service.getRows(0))
     // console.log('devices', devices)
 
     for (const device of devices) {
