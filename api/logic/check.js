@@ -1,4 +1,4 @@
-// const { authentication } = require('../common/auth')
+const { authentication } = require('../common/auth')
 const { nowDate } = require('../common/date')
 
 const {
@@ -12,7 +12,7 @@ const executeCheck = async (req, res) => {
   const devices = await getDevices()
 
   const spreadsheetId = process.env.spreadsheetId || '1t68tFh6j3QVzo_l6HjyzWTifbN1I0mJxY6no4cRtZkY'
-  // const service = await authentication(spreadsheetId)
+  const service = await authentication(spreadsheetId)
 
   // const appliances = await getAppliances()
   // console.log('appliances', appliances)
@@ -30,7 +30,7 @@ const executeCheck = async (req, res) => {
     let motion = 0.0
 
     // newest_events
-    // console.log('service', await service.getRows(0))
+    console.log('service', await service.getRows(0))
     // console.log('devices', devices)
 
     for (const device of devices) {
