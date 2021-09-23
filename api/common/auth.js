@@ -1,7 +1,6 @@
-const fs = require('fs')
+// const fs = require('fs')
 const { GoogleSpreadsheet } = require('google-spreadsheet')
-
-const keyFile = process.env.keyFile || 'my_smart_home.json'
+// const keyFile = process.env.keyFile || 'my_smart_home.json'
 
 class SpreadSheetService {
 
@@ -94,14 +93,18 @@ const authentication = async (spread_sheet_key) => {
   const service = await new SpreadSheetService(spread_sheet_key)
 
   let credit = null
-  if (fs.existsSync(keyFile)) {
-    // 認証情報jsonファイルを読み込む
-    credit = require('../' + keyFile)
-  } else {
-    credit = {
-      client_email: process.env.clientEmail,
-      private_key: process.env.privateKey,
-    }
+  // if (fs.existsSync(keyFile)) {
+  //   // 認証情報jsonファイルを読み込む
+  //   credit = require('../' + keyFile)
+  // } else {
+  //   credit = {
+  //     client_email: process.env.clientEmail,
+  //     private_key: process.env.privateKey,
+  //   }
+  // }
+  credit = {
+    client_email: process.env.clientEmail,
+    private_key: process.env.privateKey,
   }
   await service.authorize(credit)
   return service

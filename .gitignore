@@ -105,3 +105,6 @@ dist
 
 # keyFile
 my_smart_home.json
+
+# Local Netlify folder
+.netlify
