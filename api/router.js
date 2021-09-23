@@ -7,9 +7,9 @@ const express = require('express')
 //   oauthSocialLineSignup,
 // } = require('./logic/oauth')
 
-// const {
-//   getDevicesReq
-// } = require('./logic/devices')
+const {
+  getDevicesReq
+} = require('./logic/devices')
 // const {
 //   getAppliancesReq
 // } = require('./logic/appliances')
@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
   res.json({ route: req.originalUrl })
 })
 
-// router.get('/devices', getDevicesReq)
+router.get('/devices', getDevicesReq)
 // router.get('/appliances', getAppliancesReq)
 
 // router.post('/oauth/social/line/callback', oauthSocialLineCallback)
