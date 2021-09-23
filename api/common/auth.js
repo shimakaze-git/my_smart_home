@@ -19,11 +19,12 @@ class SpreadSheetService {
    * サービスアカウントを用いて認証を行う
    * @param {*} credit
    */
-  async authorize(credit) {
-    await this.doc.useServiceAccountAuth({
-      client_email: credit.client_email,
-      private_key: credit.private_key,
-    })
+  // async authorize(credit) {
+  authorize(credit) {
+    // await this.doc.useServiceAccountAuth({
+    //   client_email: credit.client_email,
+    //   private_key: credit.private_key,
+    // })
   }
 
   // /**
