@@ -1,6 +1,6 @@
 [build]
   publish = "my_smart_home_web/dist"
-  command = "yarn install && yarn build"
+  command = "source build_api.sh && cd my_smart_home_web && source build.sh"
   functions = "dist/api"
 
 [[plugins]]
