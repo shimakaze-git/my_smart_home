@@ -1,6 +1,5 @@
 const fs = require('fs')
-// const { google } = require('googleapis')
-// const { GoogleSpreadsheet } = require('google-spreadsheet')
+const { GoogleSpreadsheet } = require('google-spreadsheet')
 
 const keyFile = process.env.keyFile || 'my_smart_home.json'
 
@@ -12,19 +11,18 @@ class SpreadSheetService {
    */
 
   constructor(spreadsheetKey) {
-    // this.doc = new GoogleSpreadsheet(spreadsheetKey)
+    this.doc = new GoogleSpreadsheet(spreadsheetKey)
   }
 
   /**
    * サービスアカウントを用いて認証を行う
    * @param {*} credit
    */
-  // async authorize(credit) {
-  authorize(credit) {
-    // await this.doc.useServiceAccountAuth({
-    //   client_email: credit.client_email,
-    //   private_key: credit.private_key,
-    // })
+  async authorize(credit) {
+    await this.doc.useServiceAccountAuth({
+      client_email: credit.client_email,
+      private_key: credit.private_key,
+    })
   }
 
   // /**
