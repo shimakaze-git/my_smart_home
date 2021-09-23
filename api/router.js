@@ -10,9 +10,9 @@ const express = require('express')
 const {
   getDevicesReq
 } = require('./logic/devices')
-// const {
-//   getAppliancesReq
-// } = require('./logic/appliances')
+const {
+  getAppliancesReq
+} = require('./logic/appliances')
 // const {
 //   executeCheck
 // } = require('./logic/check')
@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/devices', getDevicesReq)
-// router.get('/appliances', getAppliancesReq)
+router.get('/appliances', getAppliancesReq)
 
 // router.post('/oauth/social/line/callback', oauthSocialLineCallback)
 // router.post('/oauth/social/line/signup', oauthSocialLineSignup)
