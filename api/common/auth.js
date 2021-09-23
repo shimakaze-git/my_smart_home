@@ -19,8 +19,8 @@ class SpreadSheetService {
    */
   async authorize(credit) {
     await this.doc.useServiceAccountAuth({
-      client_email: credit.client_email,
-      private_key: credit.private_key,
+      client_email: credit.client_email.replace(/\\n/g, "\n"),
+      private_key: credit.private_key.replace(/\\n/g, "\n"),
     })
   }
 
