@@ -1,0 +1,40 @@
+name: Edinet IPO Notify
+
+on:
+  workflow_dispatch:
+
+  # バッチ処理の実行
+  schedule:
+    # 分 時 日 月 曜日
+    - cron: '00 6,9 * * 1-5'
+
+env:
+  LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip list
+        shell: bash
+
+      - name: Run edinet_code_dl_info
+        run: |
+          python edinet_code_dl_info.py
+          ls -la
+        shell: bash
+
+      - name: Run search_ipo_send_notify
+        run: |
+          python search_ipo_send_notify.py
+        shell: bash

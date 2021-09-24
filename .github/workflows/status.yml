@@ -1,0 +1,23 @@
+name: update status
+
+on:
+  workflow_dispatch:
+
+  # バッチ処理の実行
+  schedule:
+    # 分 時 日 月 曜日
+    - cron: '15 * * * *'
+
+env:
+  WEB_HOST_DOMAIN: ${{ secrets.WEB_HOST_DOMAIN }}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run update status
+        run: |
+          curl ${WEB_HOST_DOMAIN}/.netlify/functions/app/check
+        shell: bash
+

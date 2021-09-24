@@ -1,0 +1,107 @@
+name: Edinet Application
+
+on:
+  workflow_dispatch:
+    inputs:
+      year_period:
+        description: ''
+        required: true
+        default: 5
+      update_type:
+        description: ''
+        required: true
+        default: 1
+      UpdateCorporationRun:
+        description: 'Update Corporationを動かすを決める.'
+        required: true
+        default: 1
+      version:
+        description: 'db.sqlite3のバージョン.'
+        required: false
+        default: "latest"
+
+  # バッチ処理の実行
+  schedule:
+    # 分 時 日 月 曜日
+    - cron: '5 9 * * 5'
+
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  update_database:
+    name: Update CorporationList and Update DocumentList
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip list
+        shell: bash
+
+      - name: Run Migration
+        env:
+          DEBUG: ${{ secrets.DEBUG }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+        run: |
+          env
+          ls -la && pwd
+          python manage.py makemigrations
+          python manage.py migrate
+        working-directory: ./api
+        shell: bash
+
+      - name: Run Update Corporation
+        env:
+          DEBUG: ${{ secrets.DEBUG }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+        if: ${{ github.event.inputs.UpdateCorporationRun }} == 1
+        run: |
+          ls -la && pwd
+          python manage.py update_corporations 1
+        working-directory: ./api
+        shell: bash
+
+      - name: Run Update Document
+        env:
+          DEBUG: ${{ secrets.DEBUG }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+        run: |
+          ls -la && pwd
+          python manage.py update_documents ${{ github.event.inputs.year_period }} ${{ github.event.inputs.update_type }}
+        working-directory: ./api
+        shell: bash
+
+      # - name: SAVE db.sqlite3
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: db.sqlite3_${{ github.event.inputs.version }}
+      #     path: api/db.sqlite3
+
+      - name: Upload sqlite3
+        run: |
+          mv ../api/db.sqlite3 ./
+          python upload_db_sqlite3.py
+          ls -la
+        working-directory: ./bin
+        shell: bash
+
+      - name: Slack Notification on Failure
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: failure()
+        with:
+          status: ${{ job.status }}
+        env:
+          SLACK_CHANNEL: edinet-ci
+          SLACK_TITLE: Build Failure
+          SLACK_COLOR: danger
