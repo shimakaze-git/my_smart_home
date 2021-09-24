@@ -6,7 +6,7 @@ on:
   # バッチ処理の実行
   schedule:
     # 分 時 日 月 曜日
-    - cron: '15 * * * *'
+    - cron: '*/15 * * * *'
 
 env:
   WEB_HOST_DOMAIN: ${{ secrets.WEB_HOST_DOMAIN }}
