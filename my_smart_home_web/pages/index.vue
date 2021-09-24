@@ -222,14 +222,14 @@ export default {
       ],
     }
   },
-  mounted() {
+  async mounted() {
     // 取得先のURL
-    // const url = this.$config.WEB_HOST + '/.netlify/functions/app/appliances'
-    // console.log('this.$config.HOST', this.$config.HOST)
-    // console.log('url', url)
+    const url = this.$config.WEB_HOST + '/.netlify/functions/app/appliances'
+    console.log('this.$config.HOST', this.$config.HOST)
+    console.log('url', url)
     // リクエスト（Get）
-    // const response = await this.$axios.$get(url)
-    // console.log('response', response)
+    const response = await this.$axios.$get(url)
+    console.log('response', response)
     // 配列で返ってくるのでJSONにして返却
     // return {
     //   posts: response,
