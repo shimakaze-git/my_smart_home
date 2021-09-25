@@ -58,7 +58,7 @@ const axios = require('axios')
 // }
 
 const getDevices = async () => {
-  const accessToken = 'pYCoDaoVuRe73kkHW-ZNnJ3t4KE1vLI5NFd57rY5jv4.If-5fT043ck_yqWqMAviKS25s4AOtE9hPx99iv6oT4s'
+  const accessToken = process.env.ACCESS_TOKEN || ''
   const params = {
     headers: {
       Authorization: `Bearer ${accessToken}`,
