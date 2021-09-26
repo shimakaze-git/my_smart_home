@@ -91,9 +91,8 @@ export default {
       title: 'Vuetify.js',
     }
   },
-  // computed: {},
   created() {
-    this.$store.dispatch('nuxtServerInit')
+    // this.$store.dispatch('nuxtServerInit')
   },
 }
 </script>

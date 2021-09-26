@@ -1,7 +1,8 @@
 <template>
-  <!-- style="background-color: red" -->
-  <v-row justify="center" align="center" style="background-color: red">
-    <v-col cols="12" sm="12" md="10" style="background-color: green">
+  <v-row justify="center" align="center">
+    <!-- style="background-color: red" -->
+
+    <v-col cols="12" sm="12" md="10">
       <!-- style="background-color: green" -->
 
       <!-- <div class="text-center">
@@ -119,9 +120,6 @@ import { mapGetters } from 'vuex'
 
 export default {
   components: {},
-  ...mapGetters({
-    appliances: 'getAppliances',
-  }),
   data() {
     return {
       headers: [
@@ -134,21 +132,19 @@ export default {
         { text: 'タイプ', value: 'type' },
         { text: 'id', value: 'id' },
       ],
-      desserts: [
-        // {
-        //   name: 'Frozen Yogurt',
-        //   calories: 159,
-        //   fat: 6.0,
-        //   carbs: 24,
-        //   protein: 4.0,
-        //   iron: '1%',
-        // },
-      ],
+      desserts: [],
     }
   },
+  computed: {
+    ...mapGetters({
+      appliances: 'getAppliances',
+    }),
+  },
   mounted() {
+    // beforeUpdate() {
     // 取得先のURL
-    // this.desserts = this.appliances
+    // console.log('appliances', this.appliances)
+    this.desserts = this.appliances
   },
 }
 // padding-top: 56.25%;

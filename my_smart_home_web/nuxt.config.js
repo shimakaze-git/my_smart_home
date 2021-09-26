@@ -2,6 +2,9 @@ import colors from 'vuetify/es5/util/colors'
 require('dotenv').config()
 
 export default {
+  // ssr Option
+  ssr: false,
+
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s - my_smart_home_web',
@@ -18,7 +21,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: [{ src: '~/plugins/nuxt-client-init.js', ssr: false }],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -77,7 +80,7 @@ export default {
   build: {},
 
   publicRuntimeConfig: {
-    WEB_HOST: process.env.WEB_HOST || '',
+    WEB_HOST: process.env.WEB_HOST || 'http://localhost:9000',
   },
 
   // 404

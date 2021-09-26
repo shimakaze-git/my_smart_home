@@ -1,5 +1,7 @@
+export const strict = false
+
 export const state = () => ({
-  appliances: [{}],
+  appliances: [],
   devices: [],
 })
 
@@ -10,7 +12,8 @@ export const getters = {
 }
 
 export const mutations = {
-  async getAppliances(state) {
+  async getAppliancesMutation(state) {
+    console.log('getAppliancesMutation')
     // 取得先のURL
     const url = this.$config.WEB_HOST + '/.netlify/functions/app/appliances'
     const response = await this.$axios.$get(url)
@@ -34,8 +37,10 @@ export const mutations = {
 
 // store/index.js
 export const actions = {
-  nuxtServerInit({ commit }) {
-    commit('getAppliances')
-    // commit('getDevices')
+  // nuxtServerInit({ commit }) {
+  nuxtClientInit({ commit, state }, { app }) {
+    console.log('nuxtServerInit')
+    commit('getAppliancesMutation')
+    commit('getDevices')
   },
 }
