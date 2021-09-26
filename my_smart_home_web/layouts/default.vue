@@ -30,21 +30,23 @@
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
+
+      <!-- <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
+      </v-btn> -->
+      <!-- <v-btn icon @click.stop="fixed = !fixed">
         <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+      </v-btn> -->
+      <!-- <v-toolbar-title v-text="title" /> -->
+      <!-- <v-spacer /> -->
+      <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
 
     <v-main>
       <v-container>
+        {{ appliances }}
         <nuxt />
       </v-container>
     </v-main>
@@ -67,6 +69,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -76,13 +80,13 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'HOME',
           to: '/',
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
+          title: 'AirCon 1',
+          to: '/aircon',
         },
       ],
       miniVariant: false,
@@ -91,8 +95,21 @@ export default {
       title: 'Vuetify.js',
     }
   },
-  created() {
-    // this.$store.dispatch('nuxtServerInit')
+  computed: {
+    ...mapGetters({
+      appliances: 'getAppliances',
+    }),
+  },
+  updated() {
+    console.log('this.appliances', this.appliances.length)
+    for (let i = 0; i < this.appliances.length; i++) {
+      // str = str + i
+      console.log('appliances', this.appliances[i])
+
+      // id: (...)
+      // name: "しまかぜsoft Lock"
+      // type
+    }
   },
 }
 </script>
