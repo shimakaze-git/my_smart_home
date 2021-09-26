@@ -46,7 +46,7 @@
 
     <v-main>
       <v-container>
-        {{ appliances }}
+        {{ applianceList }}
         <nuxt />
       </v-container>
     </v-main>
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -83,33 +83,33 @@ export default {
           title: 'HOME',
           to: '/',
         },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'AirCon 1',
-          to: '/aircon',
-        },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'Vuetify.js',
+      applianceList: [],
     }
   },
-  computed: {
-    ...mapGetters({
-      appliances: 'getAppliances',
-    }),
-  },
-  updated() {
-    console.log('this.appliances', this.appliances.length)
-    for (let i = 0; i < this.appliances.length; i++) {
-      // str = str + i
-      console.log('appliances', this.appliances[i])
+  // computed: {},
+  async mounted() {
+    this.applianceList = await this.$store.getters.getAppliances
+    setTimeout(() => {
+      for (let i = 0; i < this.applianceList.length; i++) {
+        const data = this.applianceList[i]
+        const typeList = {
+          AC: 'aircon',
+        }
+        let link = '/' + typeList[data.type]
+        link += '?id=' + data.id
 
-      // id: (...)
-      // name: "しまかぜsoft Lock"
-      // type
-    }
+        console.log('data', data)
+        this.items.push({
+          title: data.name,
+          to: link,
+        })
+      }
+    }, 1000)
   },
 }
 </script>
