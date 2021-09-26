@@ -11,7 +11,8 @@ const {
   getDevicesReq
 } = require('./logic/devices')
 const {
-  getAppliancesReq
+  getAppliancesReq,
+  sendAppliancesReq
 } = require('./logic/appliances')
 const {
   executeCheck
@@ -34,6 +35,7 @@ router.get('/', (req, res) => {
 
 router.get('/devices', getDevicesReq)
 router.get('/appliances', getAppliancesReq)
+router.post('/appliances/:appliance_id/send', sendAppliancesReq)
 
 // router.post('/oauth/social/line/callback', oauthSocialLineCallback)
 // router.post('/oauth/social/line/signup', oauthSocialLineSignup)
