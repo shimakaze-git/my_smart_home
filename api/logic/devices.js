@@ -2,6 +2,10 @@
 const axios = require('axios')
 // const { clientId } = require('../config')
 
+const {
+  discomfortIndex
+} = require('./calculation')
+
 // // LINEからアクセストークンを取得する.
 // const createAccessToken = (requestBody) => {
 //   return new Promise((resolve, reject) => {
@@ -97,6 +101,12 @@ const getDevices = async () => {
     // 人感センサー
     devices[i].newest_events.motion = devices[i].newest_events.mo
     delete devices[i].newest_events.mo
+
+    // 不快指数を計算する
+    const temperature = devices[i].newest_events.temperature.val
+    const humidity = devices[i].newest_events.humidity.val
+    const di = discomfortIndex(temperature, humidity)
+    devices[i].discomfort_index = di
 
     data.push(devices[i])
   }
