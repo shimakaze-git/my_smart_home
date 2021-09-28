@@ -46,7 +46,7 @@
 
     <v-main>
       <v-container>
-        {{ applianceList }}
+        <!-- {{ applianceList }} -->
         <nuxt />
       </v-container>
     </v-main>
@@ -92,13 +92,14 @@ export default {
     }
   },
   // computed: {},
-  async mounted() {
+  async updated() {
     this.applianceList = await this.$store.getters.getAppliances
     setTimeout(() => {
       for (let i = 0; i < this.applianceList.length; i++) {
         const data = this.applianceList[i]
         const typeList = {
           AC: 'aircon',
+          LIGHT: 'light',
         }
         let link = '/' + typeList[data.type]
         link += '?id=' + data.id
