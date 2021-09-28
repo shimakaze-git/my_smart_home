@@ -100,6 +100,30 @@ const sendAirCon = async (appliance_id, data) => {
   return appliance
 }
 
+const sendLight = async (appliance_id, data) => {
+  const accessToken = process.env.ACCESS_TOKEN || 'T2CbsheEXZaP3tekP1R1vGPzZEtDXpzSKDWU9LhgxtA.NZ0nm3_tvcllnbdhCMXXQW0GQMf-7okSqO9PRECyeVY'
+  const headers = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }
+
+  let params = new URLSearchParams()
+  params.append('button', data.button)
+
+  let apiUrl = 'https://api.nature.global/1/appliances/'
+  apiUrl += appliance_id + '/light'
+  const appliance = await axios
+    .post(apiUrl, params, headers)
+    .then((res) => {
+      return res.data
+    })
+    .catch((error) => {
+      return error.response
+    })
+  return appliance
+}
+
 const sendAppliancesReq = async (req, res) => {
   let data = {}
   try {
@@ -109,6 +133,9 @@ const sendAppliancesReq = async (req, res) => {
     if(type === 'AC') {
       const appliance = await sendAirCon(appliance_id, req.body)
       data = appliance
+    } else if (type === 'LIGHT') {
+      const light = await sendLight(appliance_id, req.body)
+      data = light
     }
     return res.status(200).json(data)
   } catch (error) {
