@@ -4,6 +4,12 @@
       <template>
         <v-form>
           <v-container>
+            <v-row>
+              <v-col cols="12" md="12">
+                <Sensor />
+              </v-col>
+            </v-row>
+
             <v-row v-if="model">
               <v-col cols="12" md="4">
                 <v-text-field v-model="model.id" label="id" required disabled />
@@ -133,8 +139,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import Sensor from '@/components/Sensor.vue'
 
 export default {
+  components: {
+    Sensor,
+  },
   data() {
     return {
       id: '',

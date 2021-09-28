@@ -9,6 +9,9 @@ export const getters = {
   getAppliances(state) {
     return state.appliances
   },
+  getDevices(state) {
+    return state.devices
+  },
 }
 
 export const mutations = {
@@ -31,7 +34,7 @@ export const mutations = {
     // 取得先のURL
     const url = this.$config.WEB_HOST + '/.netlify/functions/app/devices'
     const response = await this.$axios.$get(url)
-    console.log('getDevices', response)
+    state.devices = response
   },
 }
 
@@ -41,6 +44,9 @@ export const actions = {
   nuxtClientInit({ commit, state }, { app }) {
     console.log('nuxtServerInit')
     commit('getAppliancesMutation')
+    commit('getDevices')
+  },
+  getDevices({ commit }) {
     commit('getDevices')
   },
 }

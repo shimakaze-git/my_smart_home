@@ -92,7 +92,7 @@ export default {
     }
   },
   // computed: {},
-  async updated() {
+  async mounted() {
     this.applianceList = await this.$store.getters.getAppliances
     setTimeout(() => {
       for (let i = 0; i < this.applianceList.length; i++) {
