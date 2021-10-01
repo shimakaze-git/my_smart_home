@@ -9,6 +9,23 @@ const discomfortIndex = (temperature, humidity) => {
   // 冬場	18～22度	55～65%
   // https://magazine.aruhi-corp.co.jp/0000-1541/
 
+  // 室内の適正温度・湿度
+  // 春・秋 温度 19 ~ 23度 湿度 50%
+  // 夏 温度 24 ~ 27度 湿度 60%
+  // 冬 温度 18 ~ 21度 湿度 40%
+  // https://image.rakuten.co.jp/ajaxmart/cabinet/ssls3_01_03.jpg
+
+  // 高湿で危険性が増すもの
+  // カビ	 20〜30℃/70%以上で繁殖（60%から活発化）
+  // ダニ	25〜30℃/60〜85%で繁殖（55%から活発化）
+
+  // 低湿で危険性が増すもの
+  // 湿度20%以下では死なない
+  // （22℃以上/50％以上で激減、65%で生存率ほぼ0）
+
+  // 肌によいのは60〜65%。50%を下回ると肌が乾燥し始めます。
+  // https://hitori-life.com/ondo/#toc7
+
   let di = null
   let rank = null
   try {

@@ -5,61 +5,113 @@ const axios = require('axios')
 const {
   discomfortIndex
 } = require('./calculation')
+const {
+  nowDate,
+  convertToJst
+} = require('../common/date')
 
-// // LINEからアクセストークンを取得する.
-// const createAccessToken = (requestBody) => {
-//   return new Promise((resolve, reject) => {
-//     const params = new URLSearchParams()
-//     for (let i = 0; i < Object.keys(requestBody).length; i++) {
-//       const key = Object.keys(requestBody)[i]
-//       const data = requestBody[key]
-//       params.append(key, data)
-//     }
+// 季節毎の最適な温度と湿度を求める
+const OptimalTemperatureHumidity = () => {
 
-//     const apiUrl = 'https://api.line.me/oauth2/v2.1/token'
-//     axios
-//       .post(apiUrl, params)
-//       .then((res) => {
-//         resolve(res.data)
-//       })
-//       .catch((error) => {
-//         reject(error.response)
-//       })
-//   })
-// }
+  // 夏場	25～28度	45～60%
+  // 冬場	18～22度	55～65%
+  // https://magazine.aruhi-corp.co.jp/0000-1541/
 
-// const getUserProfile = async (accessToken, idToken) => {
-//   const params = {
-//     headers: {
-//       Authorization: `Bearer ${accessToken}`,
-//     },
-//   }
+  // 室内の適正温度・湿度
+  // 春・秋 温度 19 ~ 23度 湿度 50%
+  // 夏 温度 24 ~ 27度 湿度 60%
+  // 冬 温度 18 ~ 21度 湿度 40%
 
-//   const apiUrl = 'https://api.line.me/v2/profile'
-//   const profile = await axios
-//     .get(apiUrl, params)
-//     .then((res) => {
-//       return res.data
-//     })
-//     .catch((error) => {
-//       return error.response
-//     })
+  const config = {}
 
-//   return new Promise((resolve, reject) => {
-//     let apiUrl = 'https://api.line.me/oauth2/v2.1/verify'
-//     apiUrl += '?id_token=' + idToken + '&client_id=' + clientId
+  // 春
+  for (let i=3; i <= 5; i++) {
+    config[i] = {
+      temperature: {
+        min: 19,
+        max: 23,
+      },
+      humidity: {
+        min: 45,
+        max: 55,
+      }
+    }
+  }
 
-//     axios
-//       .post(apiUrl)
-//       .then((res) => {
-//         const userProfileData = Object.assign(profile, res.data)
-//         resolve(userProfileData)
-//       })
-//       .catch((error) => {
-//         reject(error.response)
-//       })
-//   })
-// }
+  // 夏
+  for (let i=6; i <= 8; i++) {
+    config[i] = {
+      temperature: {
+        min: 24,
+        max: 27,
+      },
+      humidity: {
+        min: 45,
+        max: 60,
+      }
+    }
+  }
+
+  // 秋
+  for (let i=9; i <= 11; i++) {
+    config[i] = {
+      temperature: {
+        min: 19,
+        max: 23,
+      },
+      humidity: {
+        min: 45,
+        max: 55,
+      }
+    }
+  }
+
+  // 冬
+  config[12] = {
+    temperature: {
+      min: 18,
+      max: 22,
+    },
+    humidity: {
+      min: 50,
+      max: 60,
+    }
+  }
+  for (let i=1; i <= 2; i++) {
+    config[i] = {
+      temperature: {
+        min: 18,
+        max: 22,
+      },
+      humidity: {
+        min: 50,
+        max: 60,
+      }
+    }
+  }
+
+  for (let key in config) {
+    let min = 0
+    let max = 0
+    let median = 0
+    const temperature = config[key].temperature
+    const humidity = config[key].humidity
+
+    // 温度の平均を求める
+    min = temperature.min
+    max = temperature.max
+    median = (min + max) / 2
+    temperature.median = median
+
+    // 湿度の平均を求める
+    min = humidity.min
+    max = humidity.max
+    median = (min + max) / 2
+    humidity.median = median
+  }
+
+  return config
+}
 
 const getDevices = async () => {
   const accessToken = process.env.ACCESS_TOKEN || ''
@@ -88,18 +140,22 @@ const getDevices = async () => {
   for (i in devices) {
     // 湿度
     devices[i].newest_events.humidity = devices[i].newest_events.hu
+    devices[i].newest_events.humidity.created_at = convertToJst(devices[i].newest_events.humidity.created_at)
     delete devices[i].newest_events.hu
 
     // 照度
     devices[i].newest_events.Illuminance = devices[i].newest_events.il
+    devices[i].newest_events.Illuminance.created_at = convertToJst(devices[i].newest_events.Illuminance.created_at)
     delete devices[i].newest_events.il
 
     // 気温
     devices[i].newest_events.temperature = devices[i].newest_events.te
+    devices[i].newest_events.temperature.created_at = convertToJst(devices[i].newest_events.temperature.created_at)
     delete devices[i].newest_events.te
 
     // 人感センサー
     devices[i].newest_events.motion = devices[i].newest_events.mo
+    devices[i].newest_events.motion.created_at = convertToJst(devices[i].newest_events.motion.created_at)
     delete devices[i].newest_events.mo
 
     // 不快指数を計算する
@@ -108,8 +164,26 @@ const getDevices = async () => {
     const di = discomfortIndex(temperature, humidity)
     devices[i].discomfort_index = di
 
+    // UTC → JST 変換
+    const createdAt = convertToJst(devices[i].created_at)
+    devices[i].created_at = createdAt
+
+    // UTC → JST 変換
+    const updatedAt = convertToJst(devices[i].updated_at)
+    devices[i].updated_at = updatedAt
+
+    // 最適な温度と湿度を月毎で求める
+    const OptimalTEconfig = await OptimalTemperatureHumidity()
+    const date = await nowDate()
+
+    const month = date[1]
+    const temperatureHumidity = OptimalTEconfig[month]
+    devices[i].optimal_temperature_humidity = temperatureHumidity
+
+    // Optimal temperature and humidity
     data.push(devices[i])
   }
+
   return data
 }
 

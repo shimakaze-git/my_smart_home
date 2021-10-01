@@ -45,6 +45,15 @@ const nowDate = () => {
   ]
 }
 
+const convertToJst = (at) => {
+  const date = new Date(at)
+
+  // UTC → JST 変換
+  const jst = date.toLocaleString()
+  return jst
+}
+
 module.exports = {
   nowDate,
+  convertToJst
 }
