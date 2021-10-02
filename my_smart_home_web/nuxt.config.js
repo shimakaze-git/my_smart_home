@@ -81,6 +81,7 @@ export default {
 
   publicRuntimeConfig: {
     WEB_HOST: process.env.WEB_HOST || 'http://localhost:9000',
+    SWITCH_BOT_ACCESS_TOKEN: process.env.SWITCH_BOT_ACCESS_TOKEN || '',
   },
 
   // 404

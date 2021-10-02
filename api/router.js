@@ -8,7 +8,8 @@ const express = require('express')
 // } = require('./logic/oauth')
 
 const {
-  getDevicesReq
+  getDevicesReq,
+  deviceCommandsReq
 } = require('./logic/devices')
 const {
   getAppliancesReq,
@@ -34,8 +35,12 @@ router.get('/', (req, res) => {
 })
 
 router.get('/devices', getDevicesReq)
+router.post('/devices/:deviceId/commands', deviceCommandsReq)
+
 router.get('/appliances', getAppliancesReq)
 router.post('/appliances/:appliance_id/send', sendAppliancesReq)
+
+// const url = this.$config.WEB_HOST + '/.netlify/functions/app/appliances'
 
 // router.post('/oauth/social/line/callback', oauthSocialLineCallback)
 // router.post('/oauth/social/line/signup', oauthSocialLineSignup)

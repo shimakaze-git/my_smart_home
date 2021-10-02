@@ -192,7 +192,72 @@ const getDevicesReq = async (req, res) => {
   return res.status(200).json(data)
 }
 
+const deviceCommandsReq = async (req, res) => {
+  // const data = await getDevices()
+  // return res.status(200).json(data)
+
+  let data = {}
+  try {
+    const deviceId = req.params.deviceId
+    // const type = req.body.type
+
+    console.log('req.body', req.body)
+    console.log('deviceId', deviceId)
+
+    const params = {
+      command: req.body.commands.command,
+      parameter: req.body.commands.parameter,
+      commandType: req.body.commands.commandType
+    }
+    const accessToken = req.body.auth.accessToken
+
+    console.log('params', params)
+    console.log('accessToken', accessToken)
+
+    // const accessToken = process.env.ACCESS_TOKEN || ''
+    // const params = {
+    //   headers: {
+    //     Authorization: `Bearer ${accessToken}`,
+    //   },
+    // }
+
+    // const apiUrl = 'https://api.nature.global/1/devices'
+    // const devices = await axios
+    //   .get(apiUrl, params)
+    //   .then((res) => {
+    //     return res.data
+    //   })
+    //   .catch((error) => {
+    //     return error.response
+    //   })
+
+    // if(type === 'AC') {
+    //   const appliance = await sendAirCon(appliance_id, req.body)
+    //   data = appliance
+    // } else if (type === 'LIGHT') {
+    //   const light = await sendLight(appliance_id, req.body)
+    //   data = light
+    // }
+
+    const url = 'https://api.switch-bot.com/v1.0/devices/' + deviceId + '/commands'
+    const headers = {
+      headers: {
+        'Content-Type': 'application/json; charset: utf8',
+        Authorization: accessToken,
+      },
+    }
+    const response = await axios.post(url, params, headers)
+    console.log('response', response.data)
+
+    return res.status(200).json(data)
+  } catch (error) {
+    console.log('error', error)
+    return res.status(500)
+  }
+}
+
 module.exports = {
   getDevicesReq,
-  getDevices
+  getDevices,
+  deviceCommandsReq
 }
