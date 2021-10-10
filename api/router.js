@@ -18,6 +18,9 @@ const {
 const {
   executeCheck
 } = require('./logic/check')
+const {
+  KeyOpenReq
+} = require('./logic/key')
 
 // const { SignIn, SignUp, Logout } = require('./logic/auth')
 
@@ -39,6 +42,8 @@ router.post('/devices/:deviceId/commands', deviceCommandsReq)
 
 router.get('/appliances', getAppliancesReq)
 router.post('/appliances/:appliance_id/send', sendAppliancesReq)
+
+router.post('/key', KeyOpenReq)
 
 // const url = this.$config.WEB_HOST + '/.netlify/functions/app/appliances'
 

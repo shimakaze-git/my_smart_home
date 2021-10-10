@@ -22,64 +22,16 @@ export default {
     // Sensor,
   },
   data() {
-    return {
-      apiBaseUrl: '',
-      deviceId: '',
-      accessToken: '',
-    }
+    return {}
   },
   // computed: {},
-  created() {},
-  mounted() {
-    this.apiBaseUrl = this.$config.WEB_HOST
-    this.deviceId = 'CF2FE2035C97'
-    this.accessToken = this.$config.SWITCH_BOT_ACCESS_TOKEN
-  },
+  // created() {},
+  mounted() {},
   methods: {
     async push() {
-      if (this.accessToken && this.deviceId) {
-        const params = {
-          commands: {
-            // 操作内容
-            command: 'press',
-            // parameter: 'default',
-            // commandType: 'command',
-            // command: 'turnOn',
-            parameter: 'default',
-            commandType: 'command',
-          },
-          auth: {
-            accessToken: this.accessToken,
-          },
-        }
-        // console.log('params', params)
-
-        const url =
-          this.$config.WEB_HOST +
-          '/.netlify/functions/app/devices/' +
-          this.deviceId +
-          '/commands'
-        // const headers = {
-        //   headers: {
-        //     'Content-Type': 'application/json; charset: utf8',
-        //   },
-        // }
-        const response = await this.$axios.$post(url, params)
-        console.log('response', response)
-
-        // const url =
-        //   this.apiBaseUrl + '/v1.0/devices/' + this.deviceId + '/commands'
-
-        // const headers = {
-        //   headers: {
-        //     'Content-Type': 'application/json; charset: utf8',
-        //     Authorization: this.accessToken,
-        //     withCredentials: true,
-        //   },
-        // }
-        // const response = await axios.$post(url, params, headers)
-        // console.log('response', response)
-      }
+      const url = this.$config.WEB_HOST + '/.netlify/functions/app/key'
+      const response = await this.$axios.$post(url)
+      console.log('response', response)
     },
   },
 }

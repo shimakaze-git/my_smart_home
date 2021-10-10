@@ -1,15 +1,60 @@
 const axios = require('axios')
 
+const getSwitchBotDevices = async () => {
+  let switchBotAccessToken = process.env.SWITCH_BOT_ACCESS_TOKEN || ''
+  let params = {
+    headers: {
+      Authorization: `${switchBotAccessToken}`,
+      'Content-Type': 'application/json; charset: utf8',
+    }
+  }
+
+  let apiUrl = 'https://api.switch-bot.com/v1.0/devices'
+  try {
+    let devices = []
+
+    const switchBotDevices = await axios
+    .get(apiUrl, params)
+    .then((res) => {
+      return res.data
+    })
+    .catch((error) => {
+      return error.response
+    })
+    const body = switchBotDevices.body
+    const deviceList = body.deviceList
+    const infraredRemoteList = body.infraredRemoteList
+
+    for (i in deviceList) {
+      devices.push(deviceList[i])
+    }
+
+    for (i in infraredRemoteList) {
+      devices.push(infraredRemoteList[i])
+    }
+    // devices.push(deviceList)
+    // devices.push(infraredRemoteList)
+
+    // console.log('deviceList', deviceList)
+    // console.log('infraredRemoteList', infraredRemoteList)
+
+    return devices
+  } catch (error) {
+    console.log('error', error)
+    return
+  }
+}
+
 const getAppliances = async () => {
-  const accessToken = process.env.ACCESS_TOKEN || ''
-  const params = {
+  let accessToken = process.env.ACCESS_TOKEN || ''
+  let params = {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   }
 
-  const apiUrl = 'https://api.nature.global/1/appliances'
-  const appliances = await axios
+  let apiUrl = 'https://api.nature.global/1/appliances'
+  let appliances = await axios
     .get(apiUrl, params)
     .then((res) => {
       return res.data
@@ -27,6 +72,18 @@ const getAppliances = async () => {
   for (i in appliances) {
     data.push(appliances[i])
   }
+
+  // switchBot系のデバイス
+  const switchBotDevices = await getSwitchBotDevices()
+  // data.push({
+  //   switchBot: switchBotDevices
+  // })
+  for (i in switchBotDevices) {
+    data.push(switchBotDevices[i])
+  }
+  // console.log('switchBotDevices', switchBotDevices[0])
+  // data.push(switchBotDevices)
+
   return data
 }
 
