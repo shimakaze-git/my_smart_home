@@ -1,3 +1,5 @@
+const axios = require('axios')
+
 const KeyOpen = async () => {
   try {
     const params = {
@@ -8,7 +10,12 @@ const KeyOpen = async () => {
       parameter: 'default',
       commandType: 'command'
     }
-    let switchBotAccessToken = process.env.SWITCH_BOT_ACCESS_TOKEN || ''
+    console.log('params', params)
+    let switchBotAccessToken = process.env.SWITCH_BOT_ACCESS_TOKEN
+    console.log('switchBotAccessToken', switchBotAccessToken)
+
+    console.log('SWITCH_BOT_ACCESS_TOKEN', process.env.SWITCH_BOT_ACCESS_TOKEN)
+    console.log('BOT_SWITCH_ONE_DEVICE_ID', process.env.BOT_SWITCH_ONE_DEVICE_ID)
 
     const headers = {
       headers: {
@@ -16,15 +23,24 @@ const KeyOpen = async () => {
         Authorization: switchBotAccessToken,
       },
     }
-    let oneDeviceId = BOT_SWITCH_ONE_DEVICE_ID | ''
+    let oneDeviceId = process.env.BOT_SWITCH_ONE_DEVICE_ID
+    console.log('oneDeviceId', oneDeviceId)
     let oneUrl = 'https://api.switch-bot.com/v1.0/devices/' + oneDeviceId + '/commands'
-    await axios.post(oneUrl, params, headers)
+    console.log('oneUrl', oneUrl)
+    console.log('params', params)
+    console.log('headers', headers)
+    let res = await axios.post(oneUrl, params, headers)
+    console.log('res1', res.data)
 
-    let twoDeviceId = BOT_SWITCH_TWO_DEVICE_ID | ''
+    let twoDeviceId = process.env.BOT_SWITCH_TWO_DEVICE_ID
     let twoUrl = 'https://api.switch-bot.com/v1.0/devices/' + twoDeviceId + '/commands'
-    await axios.post(twoUrl, params, headers)
+    res = await axios.post(twoUrl, params, headers)
+    console.log('res2', res.data)
 
-    await axios.post(oneUrl, params, headers)
+    res = await axios.post(oneUrl, params, headers)
+    console.log('res3', res.data)
+
+    return
   } catch (error) {
     return error
   }
@@ -34,8 +50,6 @@ const KeyOpenReq = async (req, res) => {
   let data = {}
   try {
     await KeyOpen()
-    console.log('KeyOpen')
-
     return res.status(200).json(data)
   } catch (error) {
     console.log('error', error)

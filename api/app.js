@@ -20,8 +20,11 @@ app.use(logger)
 app.use(
   // '/',
   '/.netlify/functions/app',
-  (req, _, next) => {
+  (req, res, next) => {
     console.log('Request URL API:', req.originalUrl)
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+
     next()
   },
   router
