@@ -12,6 +12,7 @@
 
       <v-card>
         <v-card-title class="headline"> メインルーム 環境ログ </v-card-title>
+        <a href="/key">Key Pageへ移動</a>
         <div class="iframe-wrap">
           <iframe
             width="720"
