@@ -19,6 +19,8 @@
 import axios from 'axios'
 // import Sensor from '@/components/Sensor.vue'
 
+// tuya-cli link --api-key "pcey9jfxb026qvqrs95b" --api-secret "218e4af6b77a46d2abee9b33da885f75" --schema "shimakazesoftsmartlife" --ssid "801ZTa-C6752F" --password "0382214a" --region us
+
 export default {
   components: {
     // Sensor,
