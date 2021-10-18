@@ -5,7 +5,7 @@
         <v-col cols="12" md="12"> </v-col>
         <v-row>
           <v-col cols="12" md="12">
-            <div v-if="!loading" class="circle" @click="push">KEY PUSH</div>
+            <div v-if="!loading" class="circle" @click="push">KEY OPEN</div>
             <div v-if="loading" class="loader">Loading...</div>
 
             <!-- <Sensor /> -->

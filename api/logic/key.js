@@ -24,41 +24,26 @@ const KeyOpen = async () => {
       },
     }
 
-    let oneDeviceId = process.env.BOT_SWITCH_ONE_DEVICE_ID
-    console.log('oneDeviceId', oneDeviceId)
-    let oneUrl = 'https://api.switch-bot.com/v1.0/devices/' + oneDeviceId + '/commands'
-    // console.log('oneUrl', oneUrl)
-    // console.log('params', params)
-    // console.log('headers', headers)
-    let res = await axios.post(oneUrl, params, headers)
-    console.log('res1', res.data)
+    setTimeout(() => {
+      let oneDeviceId = process.env.BOT_SWITCH_ONE_DEVICE_ID
+      let oneUrl = 'https://api.switch-bot.com/v1.0/devices/' + oneDeviceId + '/commands'
+      console.log('oneUrl', oneUrl)
+      let res = await axios.post(oneUrl, params, headers)
+      console.log('res1', res.data)
+    }, 100)
 
-    let twoDeviceId = process.env.BOT_SWITCH_TWO_DEVICE_ID
-    let twoUrl = 'https://api.switch-bot.com/v1.0/devices/' + twoDeviceId + '/commands'
-    res = await axios.post(twoUrl, params, headers)
-    console.log('res2', res.data)
+    setTimeout(() => {
+      let twoDeviceId = process.env.BOT_SWITCH_TWO_DEVICE_ID
+      let twoUrl = 'https://api.switch-bot.com/v1.0/devices/' + twoDeviceId + '/commands'
+      console.log('twoUrl', twoUrl)
+      res = await axios.post(twoUrl, params, headers)
+      console.log('res2', res.data)
+    }, 500)
 
-    res = await axios.post(oneUrl, params, headers)
-    console.log('res3', res.data)
-
-    // return Promise.all(
-    //   [
-    //     axios.post(oneUrl, params, headers),
-    //     axios.post(twoUrl, params, headers),
-    //     axios.post(oneUrl, params, headers)
-    //     // this.$axios.get(url1),
-    //     // this.$axios.get(url2),
-    //     // this.$axios.get(url3)
-    //   ]
-    // ).then((res) => {
-    //   // 通信成功
-    //   res.forEach(r => console.log(r.data))
-    //   return
-    // }).catch((e) => {
-    //   console.log(e)
-    // }).finally(() => {
-    //   console.log('finally')
-    // })
+    setTimeout(() => {
+      let res = await axios.post(oneUrl, params, headers)
+      console.log('res3', res.data)
+    }, 1500)
   } catch (error) {
     return error
   }
